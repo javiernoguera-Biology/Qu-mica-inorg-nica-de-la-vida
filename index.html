@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAU Biología - Agua, Oligoelementos y Sales Minerales (Región de Murcia)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .option-btn {
+      transition: all 0.2s ease-in-out;
+    }
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-12">
+
+  <!-- Header -->
+  <header class="bg-teal-700 text-white shadow-lg py-6 px-4 mb-8">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div>
+        <span class="text-teal-200 text-xs font-semibold tracking-wider uppercase">PAU Biología • Región de Murcia</span>
+        <h1 class="text-2xl sm:text-3xl font-bold">Bloque A: Agua, Oligoelementos y Sales Minerales</h1>
+      </div>
+      <div class="bg-teal-800 px-4 py-2 rounded-lg text-center border border-teal-600">
+        <span class="text-xs text-teal-200 block uppercase font-medium">Progreso</span>
+        <span id="progress-text" class="text-xl font-bold text-teal-100">0 / 6 Resueltas</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-4xl mx-auto px-4">
+
+    <!-- Questions Container -->
+    <div id="questions-container" class="space-y-6"></div>
+
+    <!-- Reset Button -->
+    <div class="mt-8 text-center">
+      <button onclick="resetQuiz()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold px-6 py-2.5 rounded-lg transition-colors border border-slate-300">
+        <i class="fa-solid fa-rotate-right mr-2"></i>Reordenar y Reiniciar Cuestionario
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    const rawQuizData = [
+      {
+        id: 1,
+        question: "¿Qué propiedad fisicoquímica del agua permite a los seres vivos mantener constante su temperatura corporal frente a variaciones térmicas ambientales?",
+        options: [
+          { text: "Su bajo calor de vaporización.", isCorrect: false },
+          { text: "Su elevado calor específico, que requiere absorber o ceder gran cantidad de energía para modificar su temperatura.", isCorrect: true },
+          { text: "Su baja tensión superficial y elevada viscosidad.", isCorrect: false },
+          { text: "Su elevada constante dieléctrica que rompe enlaces covalentes.", isCorrect: false }
+        ],
+        explanation: "El elevado calor específico del agua se debe a que la energía suministrada se invierte primero en romper los puentes de hidrógeno intermoleculares antes de aumentar la energía cinética de las moléculas. Esto la convierte en un excelente amortiguador o termorregulador en los organismos vivos."
+      },
+      {
+        id: 2,
+        question: "¿A qué se debe principalmente la gran capacidad del agua para disolver biomoléculas polares y compuestos iónicos?",
+        options: [
+          { text: "A su bajo punto de fusión a presión atmosférica.", isCorrect: false },
+          { text: "A su carácter dipolar y su elevada constante dieléctrica, que permiten formar capas de solvatación alrededor de los iones.", isCorrect: true },
+          { text: "A la presencia de enlaces apolares entre sus átomos de hidrógeno y oxígeno.", isCorrect: false },
+          { text: "A que alcanza su máxima densidad a los 4 °C en estado sólido.", isCorrect: false }
+        ],
+        explanation: "La geometría angular de la molécula de agua y la diferencia de electronegatividad entre el O y el H le confieren un marcado carácter dipolar. Su elevada constante dieléctrica disminuye la atracción electrostática entre los iones opuestos de las sales, atrayéndolos y rodeándolos de moléculas de agua (solvatación)."
+      },
+      {
+        id: 3,
+        question: "¿Cuál de las siguientes relaciones entre oligoelemento y su función / deficiencia biológica en el ser humano es CORRECTA?",
+        options: [
+          { text: "Yodo - Constituyente fundamental de la hemoglobina para el transporte de oxígeno.", isCorrect: false },
+          { text: "Hierro - Necesario exclusivamente para la síntesis de hormonas tiroideas (tiroxina).", isCorrect: false },
+          { text: "Cobalto - Componente esencial de la cobalamina (vitamina B₁₂), cuya falta desencadena anemia perniciosa.", isCorrect: true },
+          { text: "Flúor - Cofactor enzimático imprescindible para el metabolismo celular de la glucosa.", isCorrect: false }
+        ],
+        explanation: "El cobalto es un oligoelemento imprescindible que forma parte de la vitamina B₁₂ (cobalamina). Su carencia en la dieta o la falta de absorción intestinal provoca una maduración defectuosa de los eritrocitos, resultando en anemia perniciosa."
+      },
+      {
+        id: 4,
+        question: "¿De qué manera contribuyen las sales minerales disueltas (como el tampón bicarbonato) a la homeostasis celular?",
+        options: [
+          { text: "Precipitando en forma de cristales sólidos para endurecer el citoplasma.", isCorrect: false },
+          { text: "Liberando o aceptando protones (H⁺) para mantener el pH de los fluidos biológicos en valores constantes.", isCorrect: true },
+          { text: "Aumentando la tensión superficial del medio acuoso para facilitar la respiración celular.", isCorrect: false },
+          { text: "Hidrolizando los lípidos de membrana durante el ayuno prolongado.", isCorrect: false }
+        ],
+        explanation: "Las sales minerales disueltas forman sistemas amortiguadores o tampón (buffer), como el tampón bicarbonato (HCO₃⁻/H₂CO₃) en el medio extracelular o el tampón fosfato (HPO₄²⁻/H₂PO₄⁻) en el medio intracelular. Actúan aceptando o cediendo protones según varíe el pH, manteniendo la neutralidad."
+      },
+      {
+        id: 5,
+        question: "Si se sumerge una célula vegetal en una disolución salina fuertemente hipertónica respecto al medio vacuolar, ¿qué fenómeno ocurre?",
+        options: [
+          { text: "El agua entra masivamente por ósmosis provocando la lisis celular por rotura de la pared.", isCorrect: false },
+          { text: "El agua sale de la célula por ósmosis, produciéndose la plasmólisis con arrugamiento del protoplasto y retracción de la membrana.", isCorrect: true },
+          { text: "Las sales entran por difusión simple hasta igualar las concentraciones en ambos lados.", isCorrect: false },
+          { text: "Ocurre una crenación idéntica a la del glóbulo rojo, sin afectación de la pared celular.", isCorrect: false }
+        ],
+        explanation: "En un medio hipertónico, el agua abandona la vacuola y el citoplasma vegetal por ósmosis para diluir el medio externo. Como consecuencia, el volumen celular se reduce y la membrana plasmática se despega de la pared celular rígida, proceso denominado plasmólisis."
+      },
+      {
+        id: 6,
+        question: "¿Cuál es la principal función de las sales minerales precipitadas (insolubles) en los seres vivos?",
+        options: [
+          { text: "Generar gradientes electroquímicos para la conducción del impulso nervioso.", isCorrect: false },
+          { text: "Formar estructuras esqueléticas, rígidas y de protección, como huesos, conchas y caparazones.", isCorrect: true },
+          { text: "Disminuir la viscosidad del citosol para permitir la locomoción celular.", isCorrect: false },
+          { text: "Catalizar las reacciones de síntesis de la pared celular vegetal.", isCorrect: false }
+        ],
+        explanation: "Las sales minerales precipitadas o insolubles, como el carbonato cálcico (CaCO₃) en conchas y moluscos, o el fosfato cálcico [Ca₃(PO₄)₂] en la matriz ósea de vertebrados, desempeñan funciones estructurales de sostén, protección mecánica y formación de exoesqueletos y endoesqueletos."
+      }
+    ];
+
+    const solvedQuestions = new Set();
+    let currentQuizData = [];
+
+    // Algoritmo Fisher-Yates para desordenar elementos aleatoriamente
+    function shuffleArray(array) {
+      const copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function prepareAndShuffleQuiz() {
+      const letters = ['a', 'b', 'c', 'd'];
+      currentQuizData = rawQuizData.map(q => {
+        const shuffledOpts = shuffleArray(q.options);
+        const formattedOptions = shuffledOpts.map((opt, index) => ({
+          letter: letters[index],
+          text: opt.text,
+          isCorrect: opt.isCorrect
+        }));
+        return {
+          ...q,
+          options: formattedOptions
+        };
+      });
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questions-container');
+      container.innerHTML = '';
+
+      currentQuizData.forEach((q, qIndex) => {
+        const qCard = document.createElement('div');
+        qCard.className = 'bg-white rounded-xl shadow-md border border-slate-200 p-6 transition-all';
+        qCard.id = `q-card-${q.id}`;
+
+        let optionsHTML = '';
+        q.options.forEach(opt => {
+          optionsHTML += `
+            <button 
+              id="opt-${q.id}-${opt.letter}" 
+              onclick="checkAnswer(${q.id}, '${opt.letter}')"
+              class="option-btn w-full text-left p-4 rounded-lg border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 flex items-start space-x-3 transition-colors">
+              <span class="font-bold text-teal-700 bg-teal-50 px-2.5 py-0.5 rounded border border-teal-100 uppercase text-sm">${opt.letter}</span>
+              <span class="text-slate-700 font-medium">${opt.text}</span>
+            </button>
+          `;
+        });
+
+        qCard.innerHTML = `
+          <div class="flex items-center justify-between mb-4">
+            <span class="text-xs font-semibold uppercase tracking-wider text-teal-600 bg-teal-50 px-3 py-1 rounded-full border border-teal-100">Pregunta ${qIndex + 1} de ${currentQuizData.length}</span>
+            <span id="status-badge-${q.id}" class="hidden text-xs font-semibold px-2.5 py-1 rounded-full"></span>
+          </div>
+          <h2 class="text-lg font-bold text-slate-800 mb-4">${q.question}</h2>
+          <div class="space-y-3 mb-4">
+            ${optionsHTML}
+          </div>
+          <div id="feedback-${q.id}" class="hidden mt-4 p-4 rounded-lg border text-sm"></div>
+        `;
+
+        container.appendChild(qCard);
+      });
+    }
+
+    function checkAnswer(qId, selectedLetter) {
+      if (solvedQuestions.has(qId)) return;
+
+      const q = currentQuizData.find(item => item.id === qId);
+      const selectedOpt = q.options.find(opt => opt.letter === selectedLetter);
+      const selectedBtn = document.getElementById(`opt-${qId}-${selectedLetter}`);
+      const feedbackEl = document.getElementById(`feedback-${qId}`);
+
+      if (selectedOpt && selectedOpt.isCorrect) {
+        // Marca como acertada
+        solvedQuestions.add(qId);
+        
+        // Estilo del botón seleccionado correcto
+        selectedBtn.className = "option-btn w-full text-left p-4 rounded-lg border-2 border-emerald-500 bg-emerald-50 text-emerald-900 flex items-start space-x-3";
+        
+        // Mostrar explicación
+        feedbackEl.className = "mt-4 p-4 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm";
+        feedbackEl.innerHTML = `
+          <div class="font-bold flex items-center gap-2 text-emerald-800 mb-1">
+            <i class="fa-solid fa-circle-check text-emerald-600"></i> ¡Correcto!
+          </div>
+          <p class="text-slate-700 mt-1"><strong>Criterio PAU Murcia:</strong> ${q.explanation}</p>
+        `;
+        feedbackEl.classList.remove('hidden');
+
+        // Deshabilitar todas las opciones de esta pregunta
+        q.options.forEach(opt => {
+          const btn = document.getElementById(`opt-${qId}-${opt.letter}`);
+          btn.disabled = true;
+          if (!opt.isCorrect) {
+            btn.classList.add('opacity-50', 'cursor-not-allowed');
+          }
+        });
+
+        updateProgress();
+
+      } else {
+        // Respuesta incorrecta: marcar solo la opción presionada y pedir reintento (sin revelar la correcta)
+        selectedBtn.className = "option-btn w-full text-left p-4 rounded-lg border-2 border-rose-400 bg-rose-50 text-rose-900 flex items-start space-x-3";
+        
+        feedbackEl.className = "mt-4 p-3 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-sm flex items-center gap-2 font-medium";
+        feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark text-rose-500 text-base"></i> Respuesta incorrecta. ¡Inténtalo de nuevo!`;
+        feedbackEl.classList.remove('hidden');
+      }
+    }
+
+    function updateProgress() {
+      const count = solvedQuestions.size;
+      document.getElementById('progress-text').innerText = `${count} / ${currentQuizData.length} Resueltas`;
+    }
+
+    function resetQuiz() {
+      solvedQuestions.clear();
+      updateProgress();
+      prepareAndShuffleQuiz();
+      renderQuestions();
+    }
+
+    // Inicializar cuestionario desordenando las respuestas
+    prepareAndShuffleQuiz();
+    renderQuestions();
+  </script>
+</body>
+</html>
